@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1
@@ -23,7 +25,7 @@ namespace WindowsFormsApp1
             }
             catch (Exception ex)
             {
-                statusLabel.Text = "Database Connection failed - check Connection String : " +
+                statusLabel.Text = "Database Connection failed - check Connection String or contact Laura ASAP " +
                 ex.Message;
             }
         }
@@ -48,10 +50,12 @@ namespace WindowsFormsApp1
 
         private void RetrieveAndShowData(string userInput)
         {
-            string query = "SELECT OITM.ItemCode, OITM.ItemName, OITM.CodeBars, OITM.SuppCatNum, ITM1.PriceList " +
-                           "FROM OITM " +
-                           "LEFT JOIN ITM1 ON OITM.ItemCode = ITM1.ItemCode " +
-                           "WHERE OITM.ItemCode = @UserInput OR OITM.SuppCatNum = @UserInput";
+            string query = "SELECT OITM.ItemCode, OITM.ItemName, OITM.CodeBars, OITM.SuppCatNum, OITM.LstEvlPric " +
+                   "FROM OITM " +
+                   "WHERE OITM.ItemCode = @UserInput OR OITM.SuppCatNum = @UserInput";
+
+
+
 
             using (SqlCommand command = new SqlCommand(query, Connection))
             {
@@ -62,13 +66,21 @@ namespace WindowsFormsApp1
                     DataTable dataTable = new DataTable();
                     adapter.Fill(dataTable);
 
-                    // Display the data in your ListBox or any other desired way
+                    // Display the data in ListBox 
                     output.Items.Clear();
                     if (dataTable.Rows.Count > 0)
                     {
                         foreach (DataRow row in dataTable.Rows)
                         {
-                            string result = $"ItemCode: {row["ItemCode"]}, ItemName: {row["ItemName"]}, CodeBars: {row["CodeBars"]}, SuppCatNum: {row["SuppCatNum"]}, PriceList: {row["PriceList"]}";
+                            string result = $"SKU: {row["ItemCode"]}";
+                            output.Items.Add(result);
+                            result = $"Product Name: {row["ItemName"]}";
+                            output.Items.Add(result);
+                            result = $"Barcode: {row["CodeBars"]}";
+                            output.Items.Add(result);
+                            result = $"Model: {row["SuppCatNum"]}";
+                            output.Items.Add(result);
+                            result = $"Price: {row["LstEvlPric"]}";
                             output.Items.Add(result);
                             break;
                         }
@@ -90,6 +102,53 @@ namespace WindowsFormsApp1
         {
             string userInput = inputBox.Text;
             RetrieveAndShowData(userInput);
+        }
+
+        private void clearBtn_Click(object sender, EventArgs e)
+        {
+            inputBox.Clear();
+            output.Items.Clear();
+        }
+
+        private void importBtn_Click(object sender, EventArgs e)
+        {
+            // Check if there is data to export
+            if (output.Items.Count == 0)
+            {
+                MessageBox.Show("No data to export.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Show a SaveFileDialog to choose the file location
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
+            saveFileDialog.Title = "Export to CSV";
+            saveFileDialog.DefaultExt = "csv";
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    // Create a StreamWriter to write to the selected file
+                    using (StreamWriter writer = new StreamWriter(saveFileDialog.FileName))
+                    {
+                        // Write the header to the file
+                        writer.WriteLine("SKU,Product Name,Barcode,Model,Price");
+
+                        // Write each item to the file
+                        foreach (var item in output.Items)
+                        {
+                            writer.WriteLine(item);
+                        }
+                    }
+
+                    MessageBox.Show("Data exported successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error exporting data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }
