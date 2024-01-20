@@ -18,3 +18,13 @@ C:\Users\csfla\OneDrive\Desktop\barCode\WindowsFormsApp2\obj\Debug\WindowsFormsA
 C:\Users\csfla\OneDrive\Desktop\barCode\WindowsFormsApp2\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
 C:\Users\csfla\OneDrive\Desktop\barCode\WindowsFormsApp2\obj\Debug\WindowsFormsApp1.exe
 C:\Users\csfla\OneDrive\Desktop\barCode\WindowsFormsApp2\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\csfla\OneDrive\Documents\GitHub\LabelGenerator\bin\Debug\WindowsFormsApp1.exe.config
+C:\Users\csfla\OneDrive\Documents\GitHub\LabelGenerator\bin\Debug\WindowsFormsApp1.exe
+C:\Users\csfla\OneDrive\Documents\GitHub\LabelGenerator\bin\Debug\WindowsFormsApp1.pdb
+C:\Users\csfla\OneDrive\Documents\GitHub\LabelGenerator\obj\Debug\WindowsFormsApp1.csproj.AssemblyReference.cache
+C:\Users\csfla\OneDrive\Documents\GitHub\LabelGenerator\obj\Debug\WindowsFormsApp1.Form1.resources
+C:\Users\csfla\OneDrive\Documents\GitHub\LabelGenerator\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+C:\Users\csfla\OneDrive\Documents\GitHub\LabelGenerator\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.cache
+C:\Users\csfla\OneDrive\Documents\GitHub\LabelGenerator\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
+C:\Users\csfla\OneDrive\Documents\GitHub\LabelGenerator\obj\Debug\WindowsFormsApp1.exe
+C:\Users\csfla\OneDrive\Documents\GitHub\LabelGenerator\obj\Debug\WindowsFormsApp1.pdb

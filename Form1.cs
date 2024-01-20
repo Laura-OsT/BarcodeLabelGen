@@ -43,23 +43,7 @@ namespace WindowsFormsApp1
 
         }
 
-        private void searchBtn_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Button Clicked!");  // Add this line
-            Console.WriteLine("Button Clicked!");  // Add this line
-
-            string userInput = input.Text.Trim();
-
-            if (!string.IsNullOrEmpty(userInput))
-            {
-                MessageBox.Show($"User Input: {userInput}");  // Add this line
-                Console.WriteLine($"User Input: {userInput}");  // Add this line
-
-                RetrieveAndShowData(userInput);
-            }
-        }
-
-
+    // ------------------Query and Display Data------------------
 
 
         private void RetrieveAndShowData(string userInput)
@@ -86,6 +70,7 @@ namespace WindowsFormsApp1
                         {
                             string result = $"ItemCode: {row["ItemCode"]}, ItemName: {row["ItemName"]}, CodeBars: {row["CodeBars"]}, SuppCatNum: {row["SuppCatNum"]}, PriceList: {row["PriceList"]}";
                             output.Items.Add(result);
+                            break;
                         }
                     }
                     else
@@ -96,5 +81,15 @@ namespace WindowsFormsApp1
             }
         }
 
+        private void closeBtn_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void searchBtn_Click(object sender, EventArgs e)
+        {
+            string userInput = inputBox.Text;
+            RetrieveAndShowData(userInput);
+        }
     }
 }
