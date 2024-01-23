@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1
@@ -20,14 +22,28 @@ namespace WindowsFormsApp1
                 Connection.ConnectionString = connectionString;
                 Connection.Open();
                 statusLabel.Text = "Connected to Database Successfully";
+                // Set KeyPreview property to true
+                this.KeyPreview = true;
+
+                // Attach KeyDown event handler to the form
+                this.KeyDown += Form1_KeyDown;
             }
             catch (Exception ex)
             {
-                statusLabel.Text = "Database Connection failed - check Connection String : " +
+                statusLabel.Text = "Database Connection failed - check Connection String or contact Laura ASAP " +
                 ex.Message;
             }
         }
 
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            // Check if the pressed key is Enter
+            if (e.KeyCode == Keys.Enter)
+            {
+                // Trigger the search when Enter is pressed
+                PerformSearch();
+            }
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
             // TODO: This line of code loads data into the 'cSF_ProdDataSet.ITM1' table. You can move, or remove it, as needed.
@@ -48,10 +64,15 @@ namespace WindowsFormsApp1
 
         private void RetrieveAndShowData(string userInput)
         {
-            string query = "SELECT OITM.ItemCode, OITM.ItemName, OITM.CodeBars, OITM.SuppCatNum, ITM1.PriceList " +
-                           "FROM OITM " +
-                           "LEFT JOIN ITM1 ON OITM.ItemCode = ITM1.ItemCode " +
-                           "WHERE OITM.ItemCode = @UserInput OR OITM.SuppCatNum = @UserInput";
+            string query = "SELECT OITM.ItemCode, OITM.ItemName, OITM.CodeBars, OITM.SuppCatNum, ITM1.Price " +
+               "FROM OITM " +
+               "INNER JOIN ITM1 ON OITM.ItemCode = ITM1.ItemCode " +
+               "INNER JOIN OPLN ON ITM1.PriceList = OPLN.ListNum " +
+               "WHERE OITM.ItemCode = @UserInput OR OITM.SuppCatNum = @UserInput";
+
+            //SELECT T0.[ItemCode], T0.[ItemName], T1.[Price], T2.[ListName] FROM OITM T0 INNER JOIN ITM1 T1 ON T0.[ItemCode] = T1.[ItemCode] INNER JOIN OPLN T2 ON T1.[PriceList] = T2.[ListNum] WHERE T2.[ListName] = [%0]
+
+
 
             using (SqlCommand command = new SqlCommand(query, Connection))
             {
@@ -62,13 +83,21 @@ namespace WindowsFormsApp1
                     DataTable dataTable = new DataTable();
                     adapter.Fill(dataTable);
 
-                    // Display the data in your ListBox or any other desired way
+                    // Display the data in ListBox 
                     output.Items.Clear();
                     if (dataTable.Rows.Count > 0)
                     {
                         foreach (DataRow row in dataTable.Rows)
                         {
-                            string result = $"ItemCode: {row["ItemCode"]}, ItemName: {row["ItemName"]}, CodeBars: {row["CodeBars"]}, SuppCatNum: {row["SuppCatNum"]}, PriceList: {row["PriceList"]}";
+                            string result = $"SKU: {row["ItemCode"]}";
+                            output.Items.Add(result);
+                            result = $"Product Name: {row["ItemName"]}";
+                            output.Items.Add(result);
+                            result = $"Barcode: {row["CodeBars"]}";
+                            output.Items.Add(result);
+                            result = $"Model: {row["SuppCatNum"]}";
+                            output.Items.Add(result);
+                            result = $"Price: {row["Price"]}";
                             output.Items.Add(result);
                             break;
                         }
@@ -86,10 +115,78 @@ namespace WindowsFormsApp1
             Close();
         }
 
-        private void searchBtn_Click(object sender, EventArgs e)
+        private void PerformSearch()
         {
             string userInput = inputBox.Text;
-            RetrieveAndShowData(userInput);
+
+            if (!string.IsNullOrEmpty(userInput))
+            {
+                RetrieveAndShowData(userInput);
+            }
+        }
+        private void searchBtn_Click(object sender, EventArgs e)
+        {
+            // string userInput = inputBox.Text;
+            // RetrieveAndShowData(userInput);
+            PerformSearch();
+        }
+
+        private void input_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                // Enter key is pressed, trigger the search
+                PerformSearch();
+            }
+        }
+
+       
+
+        private void clearBtn_Click(object sender, EventArgs e)
+        {
+            inputBox.Clear();
+            output.Items.Clear();
+        }
+
+        private void importBtn_Click(object sender, EventArgs e)
+        {
+            // Check if there is data to export
+            if (output.Items.Count == 0)
+            {
+                MessageBox.Show("No data to export.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Show a SaveFileDialog to choose the file location
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
+            saveFileDialog.Title = "Export to CSV";
+            saveFileDialog.DefaultExt = "csv";
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    // Create a StreamWriter to write to the selected file
+                    using (StreamWriter writer = new StreamWriter(saveFileDialog.FileName))
+                    {
+                        // Write the header to the file
+                        writer.WriteLine("SKU,Product Name,Barcode,Model,Price");
+
+                        // Write each item to the file
+                        foreach (var item in output.Items)
+                        {
+                            writer.WriteLine(item);
+                        }
+                    }
+
+                    MessageBox.Show("Data exported successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error exporting data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }
