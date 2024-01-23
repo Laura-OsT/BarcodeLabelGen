@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.inputBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.output = new System.Windows.Forms.ListBox();
@@ -70,13 +69,13 @@
             // 
             // output
             // 
-            this.output.Font = new System.Drawing.Font("Candara", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.output.Font = new System.Drawing.Font("Franklin Gothic Medium Cond", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.output.FormattingEnabled = true;
             this.output.HorizontalScrollbar = true;
-            this.output.ItemHeight = 28;
+            this.output.ItemHeight = 29;
             this.output.Location = new System.Drawing.Point(52, 143);
             this.output.Name = "output";
-            this.output.Size = new System.Drawing.Size(704, 228);
+            this.output.Size = new System.Drawing.Size(704, 207);
             this.output.TabIndex = 7;
             // 
             // closeBtn
@@ -175,7 +174,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Image = global::WindowsFormsApp1.Properties.Resources.The_Chef_Supply_logo;
             this.pictureBox1.Location = new System.Drawing.Point(12, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(85, 80);
@@ -202,7 +201,6 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.inputBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "TCS Label Generator";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -233,4 +231,3 @@
         private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
-

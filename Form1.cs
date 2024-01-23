@@ -64,7 +64,7 @@ namespace WindowsFormsApp1
 
         private void RetrieveAndShowData(string userInput)
         {
-            string query = "SELECT OITM.ItemCode, OITM.ItemName, OITM.CodeBars, OITM.SuppCatNum, ITM1.Price " +
+            string query = "SELECT OITM.ItemCode, OITM.ItemName, OITM.CodeBars, OITM.SuppCatNum, OITM.OnHand, OITM.IsCommited, OITM.OnOrder, OITM.BuyUnitMsr, ITM1.Price " +
                "FROM OITM " +
                "INNER JOIN ITM1 ON OITM.ItemCode = ITM1.ItemCode " +
                "INNER JOIN OPLN ON ITM1.PriceList = OPLN.ListNum " +
@@ -97,7 +97,15 @@ namespace WindowsFormsApp1
                             output.Items.Add(result);
                             result = $"Model: {row["SuppCatNum"]}";
                             output.Items.Add(result);
-                            result = $"Price: {row["Price"]}";
+                            result = $"Price: ${row["Price"]}";
+                            output.Items.Add(result);
+                            result = $"In Stock: {Convert.ToDecimal(row["OnHand"]):N0}";
+                            output.Items.Add(result);
+                            result = $"Commited: {Convert.ToDecimal(row["Price"]):N0}";
+                            output.Items.Add(result);
+                            result = $"On Order: {Convert.ToDecimal(row["OnOrder"]):N0}";
+                            output.Items.Add(result);
+                            result = $"Unit Measure: {row["BuyUnitMsr"]}";
                             output.Items.Add(result);
                             break;
                         }
@@ -188,5 +196,6 @@ namespace WindowsFormsApp1
                 }
             }
         }
+
     }
 }
