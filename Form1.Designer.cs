@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.inputBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.output = new System.Windows.Forms.ListBox();
@@ -52,18 +53,18 @@
             // inputBox
             // 
             this.inputBox.Font = new System.Drawing.Font("Cambria", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.inputBox.Location = new System.Drawing.Point(230, 101);
+            this.inputBox.Location = new System.Drawing.Point(278, 101);
             this.inputBox.Name = "inputBox";
-            this.inputBox.Size = new System.Drawing.Size(433, 31);
+            this.inputBox.Size = new System.Drawing.Size(479, 31);
             this.inputBox.TabIndex = 0;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(48, 108);
+            this.label6.Font = new System.Drawing.Font("Cambria", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(63, 109);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(167, 20);
+            this.label6.Size = new System.Drawing.Size(194, 23);
             this.label6.TabIndex = 6;
             this.label6.Text = "Enter SKU or Model:";
             // 
@@ -74,14 +75,15 @@
             this.output.HorizontalScrollbar = true;
             this.output.ItemHeight = 29;
             this.output.Location = new System.Drawing.Point(52, 143);
+            this.output.Margin = new System.Windows.Forms.Padding(5);
             this.output.Name = "output";
-            this.output.Size = new System.Drawing.Size(704, 207);
+            this.output.Size = new System.Drawing.Size(816, 323);
             this.output.TabIndex = 7;
             // 
             // closeBtn
             // 
             this.closeBtn.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.closeBtn.Location = new System.Drawing.Point(681, 390);
+            this.closeBtn.Location = new System.Drawing.Point(793, 476);
             this.closeBtn.Name = "closeBtn";
             this.closeBtn.Size = new System.Drawing.Size(75, 38);
             this.closeBtn.TabIndex = 11;
@@ -113,7 +115,7 @@
             // statusLabel
             // 
             this.statusLabel.AutoSize = true;
-            this.statusLabel.Location = new System.Drawing.Point(12, 448);
+            this.statusLabel.Location = new System.Drawing.Point(9, 498);
             this.statusLabel.Name = "statusLabel";
             this.statusLabel.Size = new System.Drawing.Size(44, 16);
             this.statusLabel.TabIndex = 12;
@@ -122,7 +124,7 @@
             // clearBtn
             // 
             this.clearBtn.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.clearBtn.Location = new System.Drawing.Point(588, 390);
+            this.clearBtn.Location = new System.Drawing.Point(694, 476);
             this.clearBtn.Name = "clearBtn";
             this.clearBtn.Size = new System.Drawing.Size(75, 38);
             this.clearBtn.TabIndex = 13;
@@ -133,7 +135,7 @@
             // importBtn
             // 
             this.importBtn.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.importBtn.Location = new System.Drawing.Point(486, 390);
+            this.importBtn.Location = new System.Drawing.Point(577, 476);
             this.importBtn.Name = "importBtn";
             this.importBtn.Size = new System.Drawing.Size(86, 38);
             this.importBtn.TabIndex = 14;
@@ -144,7 +146,7 @@
             // printBtn
             // 
             this.printBtn.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.printBtn.Location = new System.Drawing.Point(396, 390);
+            this.printBtn.Location = new System.Drawing.Point(469, 476);
             this.printBtn.Name = "printBtn";
             this.printBtn.Size = new System.Drawing.Size(75, 38);
             this.printBtn.TabIndex = 15;
@@ -154,7 +156,7 @@
             // searchBtn
             // 
             this.searchBtn.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.searchBtn.Location = new System.Drawing.Point(669, 94);
+            this.searchBtn.Location = new System.Drawing.Point(781, 98);
             this.searchBtn.Name = "searchBtn";
             this.searchBtn.Size = new System.Drawing.Size(87, 38);
             this.searchBtn.TabIndex = 16;
@@ -166,7 +168,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Cambria", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(253, 30);
+            this.label1.Location = new System.Drawing.Point(292, 28);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(309, 38);
             this.label1.TabIndex = 17;
@@ -187,7 +189,7 @@
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(830, 509);
+            this.ClientSize = new System.Drawing.Size(911, 572);
             this.ControlBox = false;
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
@@ -201,6 +203,7 @@
             this.Controls.Add(this.label6);
             this.Controls.Add(this.inputBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "TCS Label Generator";
             this.Load += new System.EventHandler(this.Form1_Load);
