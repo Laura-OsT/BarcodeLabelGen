@@ -105,5 +105,8 @@
   <ItemGroup>
     <None Include="Resources\The Chef Supply Logo SVG.ai %282%29.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Logos TCS.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

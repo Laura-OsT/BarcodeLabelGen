@@ -64,11 +64,12 @@ namespace WindowsFormsApp1
 
         private void RetrieveAndShowData(string userInput)
         {
-            string query = "SELECT OITM.ItemCode, OITM.ItemName, OITM.CodeBars, OITM.SuppCatNum, OITM.OnHand, OITM.IsCommited, OITM.OnOrder, OITM.BuyUnitMsr, ITM1.Price " +
+            string query = "SELECT TOP 1 OITM.ItemCode, OITM.ItemName, OITM.CodeBars, OITM.SuppCatNum, OITM.OnHand, OITM.IsCommited, OITM.OnOrder, OITM.BuyUnitMsr, ITM1.Price " +
                "FROM OITM " +
                "INNER JOIN ITM1 ON OITM.ItemCode = ITM1.ItemCode " +
                "INNER JOIN OPLN ON ITM1.PriceList = OPLN.ListNum " +
-               "WHERE OITM.ItemCode = @UserInput OR OITM.SuppCatNum = @UserInput";
+               "WHERE OITM.ItemCode = @UserInput OR OITM.SuppCatNum = @UserInput " +
+               "ORDER BY ITM1.Price DESC";
 
             //SELECT T0.[ItemCode], T0.[ItemName], T1.[Price], T2.[ListName] FROM OITM T0 INNER JOIN ITM1 T1 ON T0.[ItemCode] = T1.[ItemCode] INNER JOIN OPLN T2 ON T1.[PriceList] = T2.[ListNum] WHERE T2.[ListName] = [%0]
 
@@ -170,14 +171,14 @@ namespace WindowsFormsApp1
                 {
                     using (StreamWriter sw = new StreamWriter(saveFileDialog.FileName))
                     {
-                        sw.WriteLine("ItemCode,ItemName,CodeBars,SuppCatNum,Price");
+                        sw.WriteLine("ItemCode,ItemName,CodeBars,SuppCatNum,Price,BuyUnitMsr");
 
                         // Access the class-level dataTable
                         foreach (DataRow row in dataTable.Rows)
                         {
                             string barcode = $"'{row["CodeBars"]}";
 
-                            string csvLine = $"{row["ItemCode"]},{row["ItemName"]},{barcode},{row["SuppCatNum"]},{row["Price"]}";
+                            string csvLine = $"{row["ItemCode"]},{row["ItemName"]},{barcode},{row["SuppCatNum"]},{row["Price"]},{row["BuyUnitMsr"]}";
                             sw.WriteLine(csvLine);
 
                             
