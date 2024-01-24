@@ -64,7 +64,7 @@ namespace WindowsFormsApp1
 
         private void RetrieveAndShowData(string userInput)
         {
-            string query = "SELECT OITM.ItemCode, OITM.ItemName, OITM.CodeBars, OITM.SuppCatNum, ITM1.Price " +
+            string query = "SELECT OITM.ItemCode, OITM.ItemName, OITM.CodeBars, OITM.SuppCatNum, OITM.OnHand, OITM.IsCommited, OITM.OnOrder, OITM.BuyUnitMsr, ITM1.Price " +
                "FROM OITM " +
                "INNER JOIN ITM1 ON OITM.ItemCode = ITM1.ItemCode " +
                "INNER JOIN OPLN ON ITM1.PriceList = OPLN.ListNum " +
@@ -80,7 +80,8 @@ namespace WindowsFormsApp1
 
                 using (SqlDataAdapter adapter = new SqlDataAdapter(command))
                 {
-                    DataTable dataTable = new DataTable();
+                    dataTable.Clear(); // Clear existing data before filling
+                    //DataTable dataTable = new DataTable();
                     adapter.Fill(dataTable);
 
                     // Display the data in ListBox 
@@ -97,7 +98,15 @@ namespace WindowsFormsApp1
                             output.Items.Add(result);
                             result = $"Model: {row["SuppCatNum"]}";
                             output.Items.Add(result);
-                            result = $"Price: {row["Price"]}";
+                            result = $"Price: ${Convert.ToDecimal(row["Price"]):F2}";
+                            output.Items.Add(result);
+                            result = $"In Stock: {Convert.ToDecimal(row["OnHand"]):N0}";
+                            output.Items.Add(result);
+                            result = $"Commited: {Convert.ToDecimal(row["IsCommited"]):N0}";
+                            output.Items.Add(result);
+                            result = $"On Order: {Convert.ToDecimal(row["OnOrder"]):N0}";
+                            output.Items.Add(result);
+                            result = $"Unit of Measure: {row["BuyUnitMsr"]}";
                             output.Items.Add(result);
                             break;
                         }
@@ -140,7 +149,53 @@ namespace WindowsFormsApp1
             }
         }
 
+        // --------------------------------------------------------
+        // Declare dataTable at the class level
+        private DataTable dataTable = new DataTable();
+
+        // Your existing RetrieveAndShowData method
        
+
+        // Your existing importBtn_Click method
+        private void importBtn_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "CSV Files|*.csv";
+            saveFileDialog.Title = "Save CSV File";
+            saveFileDialog.ShowDialog();
+
+            if (saveFileDialog.FileName != "")
+            {
+                try
+                {
+                    using (StreamWriter sw = new StreamWriter(saveFileDialog.FileName))
+                    {
+                        sw.WriteLine("ItemCode,ItemName,CodeBars,SuppCatNum,Price");
+
+                        // Access the class-level dataTable
+                        foreach (DataRow row in dataTable.Rows)
+                        {
+                            string barcode = $"'{row["CodeBars"]}";
+
+                            string csvLine = $"{row["ItemCode"]},{row["ItemName"]},{barcode},{row["SuppCatNum"]},{row["Price"]}";
+                            sw.WriteLine(csvLine);
+
+                            
+                        }
+                    }
+
+                    MessageBox.Show("CSV file has been saved successfully!");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error saving CSV file: {ex.Message}");
+                }
+            }
+        }
+
+
+
+        // --------------------------------------------------------
 
         private void clearBtn_Click(object sender, EventArgs e)
         {
@@ -148,45 +203,7 @@ namespace WindowsFormsApp1
             output.Items.Clear();
         }
 
-        private void importBtn_Click(object sender, EventArgs e)
-        {
-            // Check if there is data to export
-            if (output.Items.Count == 0)
-            {
-                MessageBox.Show("No data to export.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
-            }
+        
 
-            // Show a SaveFileDialog to choose the file location
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
-            saveFileDialog.Title = "Export to CSV";
-            saveFileDialog.DefaultExt = "csv";
-
-            if (saveFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
-                    // Create a StreamWriter to write to the selected file
-                    using (StreamWriter writer = new StreamWriter(saveFileDialog.FileName))
-                    {
-                        // Write the header to the file
-                        writer.WriteLine("SKU,Product Name,Barcode,Model,Price");
-
-                        // Write each item to the file
-                        foreach (var item in output.Items)
-                        {
-                            writer.WriteLine(item);
-                        }
-                    }
-
-                    MessageBox.Show("Data exported successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error exporting data: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
     }
 }
