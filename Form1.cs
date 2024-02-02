@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
@@ -59,10 +60,10 @@ namespace WindowsFormsApp1
 
         }
 
-    // ------------------Query and Display Data------------------
+        // ------------------Query and Display Data------------------
 
-
-        private void RetrieveAndShowData(string userInput)
+        
+        private void RetrieveAndShowDataExact(string userInput)
         {
             string query = "SELECT TOP 1 OITM.ItemCode, OITM.ItemName, OITM.CodeBars, OITM.SuppCatNum, OITM.OnHand, OITM.IsCommited, OITM.OnOrder, OITM.BuyUnitMsr, ITM1.Price " +
                "FROM OITM " +
@@ -70,8 +71,6 @@ namespace WindowsFormsApp1
                "INNER JOIN OPLN ON ITM1.PriceList = OPLN.ListNum " +
                "WHERE OITM.ItemCode = @UserInput OR OITM.SuppCatNum = @UserInput " +
                "ORDER BY ITM1.Price DESC";
-
-            //SELECT T0.[ItemCode], T0.[ItemName], T1.[Price], T2.[ListName] FROM OITM T0 INNER JOIN ITM1 T1 ON T0.[ItemCode] = T1.[ItemCode] INNER JOIN OPLN T2 ON T1.[PriceList] = T2.[ListNum] WHERE T2.[ListName] = [%0]
 
 
 
@@ -120,20 +119,98 @@ namespace WindowsFormsApp1
             }
         }
 
+        private void RetrieveAndShowData(string userInput)
+        {
+            string query = "SELECT OITM.SuppCatNum " +
+                           "FROM OITM " +
+                           "WHERE OITM.SuppCatNum LIKE @UserInput";
+
+            using (SqlCommand command = new SqlCommand(query, Connection))
+            {
+                command.Parameters.AddWithValue("@UserInput", userInput.TrimEnd('*') + "%"); // Remove asterisk and add % for SQL wildcard
+
+                using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                {
+                    dataTable.Clear(); // Clear existing data before filling
+                    adapter.Fill(dataTable);
+
+                    DisplayWildcardSearchResults();
+                }
+            }
+        }
+
+        private void PerformSearch()
+        {
+            string userInput = inputBox.Text.Trim();
+            if (!string.IsNullOrEmpty(userInput))
+            {
+                if (userInput.EndsWith("*"))
+                {
+                    // Wildcard search by SuppCatNum
+                    RetrieveAndShowData(userInput);
+                }
+                else
+                {
+                    // Exact search by ItemCode or SuppCatNum
+                    RetrieveAndShowDataExact(userInput);
+                }
+            }
+        }
+        private void DisplaySearchResults()
+        {
+            // Display search results in the output ListBox
+            output.Items.Clear();
+            if (dataTable.Rows.Count > 0)
+            {
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    List<string> itemDetails = new List<string>();
+
+                    itemDetails.Add($"SKU: {row["ItemCode"]}");
+                    itemDetails.Add($"Product Name: {row["ItemName"]}");
+                    itemDetails.Add($"Barcode: {row["CodeBars"]}");
+                    itemDetails.Add($"Model: {row["SuppCatNum"]}");
+                    itemDetails.Add($"Price: ${Convert.ToDecimal(row["Price"]):F2}");
+                    itemDetails.Add($"In Stock: {Convert.ToDecimal(row["OnHand"]):N0}");
+                    itemDetails.Add($"Commited: {Convert.ToDecimal(row["IsCommited"]):N0}");
+                    itemDetails.Add($"On Order: {Convert.ToDecimal(row["OnOrder"]):N0}");
+                    itemDetails.Add($"Unit of Measure: {row["BuyUnitMsr"]}");
+
+                    output.Items.Add(string.Join(Environment.NewLine, itemDetails));
+                    output.Items.Add("------------------------------"); // Separator between items
+                }
+            }
+            else
+            {
+                output.Items.Add("No data found for the entered SKU or Model.");
+            }
+        }
+
+        private void DisplayWildcardSearchResults()
+        {
+            // Display wildcard search results in the output ListBox
+            output.Items.Clear();
+            if (dataTable.Rows.Count > 0)
+            {
+                output.Items.Add("Multiple items found. Please select one:");
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    output.Items.Add(row["SuppCatNum"]);
+                }
+            }
+            else
+            {
+                output.Items.Add("No items found matching the search criteria.");
+            }
+        }
+
+
         private void closeBtn_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void PerformSearch()
-        {
-            string userInput = inputBox.Text;
-
-            if (!string.IsNullOrEmpty(userInput))
-            {
-                RetrieveAndShowData(userInput);
-            }
-        }
+        
         private void searchBtn_Click(object sender, EventArgs e)
         {
             // string userInput = inputBox.Text;
@@ -204,7 +281,13 @@ namespace WindowsFormsApp1
             output.Items.Clear();
         }
 
-        
+        private void output_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Get the selected item from the ListBox
+            string selectedSuppCatNum = output.SelectedItem.ToString();
 
+            // Perform a search to retrieve the details of the selected item
+            RetrieveAndShowDataExact(selectedSuppCatNum);
+        }
     }
 }

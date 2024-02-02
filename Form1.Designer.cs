@@ -77,8 +77,10 @@
             this.output.Location = new System.Drawing.Point(52, 143);
             this.output.Margin = new System.Windows.Forms.Padding(5);
             this.output.Name = "output";
+            this.output.ScrollAlwaysVisible = true;
             this.output.Size = new System.Drawing.Size(816, 323);
             this.output.TabIndex = 7;
+            this.output.SelectedIndexChanged += new System.EventHandler(this.output_SelectedIndexChanged);
             // 
             // closeBtn
             // 
