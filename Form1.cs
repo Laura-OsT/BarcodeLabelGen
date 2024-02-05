@@ -121,9 +121,12 @@ namespace WindowsFormsApp1
 
         private void RetrieveAndShowData(string userInput)
         {
-            string query = "SELECT OITM.SuppCatNum " +
-                           "FROM OITM " +
-                           "WHERE OITM.SuppCatNum LIKE @UserInput";
+            string query = "SELECT OITM.ItemCode, OITM.ItemName, OITM.CodeBars, OITM.SuppCatNum, OITM.OnHand, OITM.IsCommited, OITM.OnOrder, OITM.BuyUnitMsr, ITM1.Price " +
+                "FROM OITM " +
+                "INNER JOIN ITM1 ON OITM.ItemCode = ITM1.ItemCode " +
+                "INNER JOIN OPLN ON ITM1.PriceList = OPLN.ListNum " +
+                "WHERE OITM.ItemCode = @UserInput OR OITM.SuppCatNum LIKE '%' + @UserInput + '%' " +
+                "ORDER BY ITM1.Price DESC";
 
             using (SqlCommand command = new SqlCommand(query, Connection))
             {
