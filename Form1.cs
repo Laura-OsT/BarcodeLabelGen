@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -121,16 +122,19 @@ namespace WindowsFormsApp1
 
         private void RetrieveAndShowData(string userInput)
         {
-            string query = "SELECT OITM.ItemCode, OITM.ItemName, OITM.CodeBars, OITM.SuppCatNum, OITM.OnHand, OITM.IsCommited, OITM.OnOrder, OITM.BuyUnitMsr, ITM1.Price " +
+            string query = "SELECT Subquery.ItemCode, Subquery.ItemName, Subquery.CodeBars, Subquery.SuppCatNum, Subquery.OnHand, Subquery.IsCommited, Subquery.OnOrder, Subquery.BuyUnitMsr, Subquery.Price " +
+                "FROM (SELECT OITM.ItemCode, OITM.ItemName, OITM.CodeBars, OITM.SuppCatNum, OITM.OnHand, OITM.IsCommited, OITM.OnOrder, OITM.BuyUnitMsr, ITM1.Price, ROW_NUMBER() OVER(PARTITION BY OITM.SuppCatNum ORDER BY OITM.ItemCode) AS RowNum " +
                 "FROM OITM " +
                 "INNER JOIN ITM1 ON OITM.ItemCode = ITM1.ItemCode " +
                 "INNER JOIN OPLN ON ITM1.PriceList = OPLN.ListNum " +
-                "WHERE OITM.ItemCode = @UserInput OR OITM.SuppCatNum LIKE '%' + @UserInput + '%' " +
-                "ORDER BY ITM1.Price DESC";
+                "WHERE OITM.ItemCode = @UserInput OR OITM.SuppCatNum LIKE '%' + @UserInput + '%') " +
+                "AS Subquery WHERE RowNum = 1 " +
+                "ORDER BY Subquery.Price DESC";
+
 
             using (SqlCommand command = new SqlCommand(query, Connection))
             {
-                command.Parameters.AddWithValue("@UserInput", userInput.TrimEnd('*') + "%"); // Remove asterisk and add % for SQL wildcard
+                command.Parameters.AddWithValue("@UserInput", userInput.TrimStart('*') + "%"); // Remove asterisk and add % for SQL wildcard
 
                 using (SqlDataAdapter adapter = new SqlDataAdapter(command))
                 {
@@ -147,7 +151,7 @@ namespace WindowsFormsApp1
             string userInput = inputBox.Text.Trim();
             if (!string.IsNullOrEmpty(userInput))
             {
-                if (userInput.EndsWith("*"))
+                if (userInput.StartsWith("*"))
                 {
                     // Wildcard search by SuppCatNum
                     RetrieveAndShowData(userInput);
