@@ -1,0 +1,113 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Laura Osorio\\Documents\\GitHub\\LabelGenerator\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{74783CB4-2F57-4BFE-A38B-7A24FFCAC02D}|WindowsFormsApp1.csproj|C:\\Users\\Laura Osorio\\Documents\\GitHub\\LabelGenerator\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74783CB4-2F57-4BFE-A38B-7A24FFCAC02D}|WindowsFormsApp1.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|WindowsFormsApp1||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Laura Osorio\\AppData\\Local\\Temp\\.vsdbgsrc\\4fa12c5f64e92143ff58aae0211d8d18b44a6473ddd7d0a60323d9f39ef889a2\\SqlInternalConnectionTds.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74783CB4-2F57-4BFE-A38B-7A24FFCAC02D}|WindowsFormsApp1.csproj|C:\\Users\\Laura Osorio\\Documents\\GitHub\\LabelGenerator\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74783CB4-2F57-4BFE-A38B-7A24FFCAC02D}|WindowsFormsApp1.csproj|solutionrelative:form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74783CB4-2F57-4BFE-A38B-7A24FFCAC02D}|WindowsFormsApp1.csproj|C:\\Users\\Laura Osorio\\Documents\\GitHub\\LabelGenerator\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{74783CB4-2F57-4BFE-A38B-7A24FFCAC02D}|WindowsFormsApp1.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74783CB4-2F57-4BFE-A38B-7A24FFCAC02D}|WindowsFormsApp1.csproj|c:\\users\\laura osorio\\documents\\github\\labelgenerator\\properties\\resources.resx||{FF4D6ACA-9352-4A5F-821E-F4D6EBDCAB11}",
+      "RelativeMoniker": "D:0:0:{74783CB4-2F57-4BFE-A38B-7A24FFCAC02D}|WindowsFormsApp1.csproj|solutionrelative:properties\\resources.resx||{FF4D6ACA-9352-4A5F-821E-F4D6EBDCAB11}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SqlInternalConnectionTds.cs",
+              "DocumentMoniker": "C:\\Users\\Laura Osorio\\AppData\\Local\\Temp\\.vsdbgsrc\\4fa12c5f64e92143ff58aae0211d8d18b44a6473ddd7d0a60323d9f39ef889a2\\SqlInternalConnectionTds.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\4fa12c5f64e92143ff58aae0211d8d18b44a6473ddd7d0a60323d9f39ef889a2\\SqlInternalConnectionTds.cs",
+              "ToolTip": "C:\\Users\\Laura Osorio\\AppData\\Local\\Temp\\.vsdbgsrc\\4fa12c5f64e92143ff58aae0211d8d18b44a6473ddd7d0a60323d9f39ef889a2\\SqlInternalConnectionTds.cs",
+              "RelativeToolTip": "..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\4fa12c5f64e92143ff58aae0211d8d18b44a6473ddd7d0a60323d9f39ef889a2\\SqlInternalConnectionTds.cs",
+              "ViewState": "AgIAAF0BAAAAAAAAAAAhwHoBAAAYAAAAAQAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-21T20:43:13.417Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "WindowsFormsApp1",
+              "DocumentMoniker": "C:\\Users\\Laura Osorio\\Documents\\GitHub\\LabelGenerator\\WindowsFormsApp1.csproj",
+              "RelativeDocumentMoniker": "WindowsFormsApp1.csproj",
+              "ToolTip": "C:\\Users\\Laura Osorio\\Documents\\GitHub\\LabelGenerator\\WindowsFormsApp1.csproj",
+              "RelativeToolTip": "WindowsFormsApp1.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-10-21T20:54:42.443Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Form1.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\Laura Osorio\\Documents\\GitHub\\LabelGenerator\\Form1.cs",
+              "RelativeDocumentMoniker": "Form1.cs",
+              "ToolTip": "C:\\Users\\Laura Osorio\\Documents\\GitHub\\LabelGenerator\\Form1.cs [Design]*",
+              "RelativeToolTip": "Form1.cs [Design]*",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-18T13:41:15.708Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\Users\\Laura Osorio\\Documents\\GitHub\\LabelGenerator\\Form1.cs",
+              "RelativeDocumentMoniker": "Form1.cs",
+              "ToolTip": "C:\\Users\\Laura Osorio\\Documents\\GitHub\\LabelGenerator\\Form1.cs*",
+              "RelativeToolTip": "Form1.cs*",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAqwC4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-18T13:41:15.858Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Form1.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\Laura Osorio\\Documents\\GitHub\\LabelGenerator\\Form1.Designer.cs",
+              "RelativeDocumentMoniker": "Form1.Designer.cs",
+              "ToolTip": "C:\\Users\\Laura Osorio\\Documents\\GitHub\\LabelGenerator\\Form1.Designer.cs",
+              "RelativeToolTip": "Form1.Designer.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAQwCIAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-18T13:41:16.009Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

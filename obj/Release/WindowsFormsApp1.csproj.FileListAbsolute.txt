@@ -8,3 +8,13 @@ C:\Users\csfla\OneDrive\Documents\GitHub\LabelGenerator\obj\Release\WindowsForms
 C:\Users\csfla\OneDrive\Documents\GitHub\LabelGenerator\obj\Release\WindowsFormsApp1.csproj.CoreCompileInputs.cache
 C:\Users\csfla\OneDrive\Documents\GitHub\LabelGenerator\obj\Release\WindowsFormsApp1.exe
 C:\Users\csfla\OneDrive\Documents\GitHub\LabelGenerator\obj\Release\WindowsFormsApp1.pdb
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Release\WindowsFormsApp1.exe.config
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Release\WindowsFormsApp1.exe
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Release\WindowsFormsApp1.pdb
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\obj\Release\WindowsFormsApp1.csproj.AssemblyReference.cache
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\obj\Release\WindowsFormsApp1.Form1.resources
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\obj\Release\WindowsFormsApp1.Properties.Resources.resources
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\obj\Release\WindowsFormsApp1.csproj.GenerateResource.cache
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\obj\Release\WindowsFormsApp1.csproj.CoreCompileInputs.cache
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\obj\Release\WindowsFormsApp1.exe
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\obj\Release\WindowsFormsApp1.pdb

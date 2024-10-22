@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Data;
@@ -7,12 +8,12 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 
+
 namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
-        public SqlConnection Connection { get; }
-        string connectionString = "Data Source=827-INC.;Initial Catalog=CSF_Prod;User Id=sa;Password=B24dcwTStqG2Ki;";
+        public SqlConnection Connection { get; private set; }
 
         public Form1()
         {
@@ -20,10 +21,19 @@ namespace WindowsFormsApp1
 
             try
             {
-                Connection = new SqlConnection();
-                Connection.ConnectionString = connectionString;
+                // Get the connection string from the environment variable
+                string connectionString = Environment.GetEnvironmentVariable("DBLabelGenerator");
+
+                if (string.IsNullOrEmpty(connectionString))
+                {
+                    throw new InvalidOperationException("Connection string not found in environment variables.");
+                }
+
+                // Establish the database connection
+                Connection = new SqlConnection(connectionString);
                 Connection.Open();
                 statusLabel.Text = "Connected to Database Successfully";
+
                 // Set KeyPreview property to true
                 this.KeyPreview = true;
 
@@ -32,8 +42,7 @@ namespace WindowsFormsApp1
             }
             catch (Exception ex)
             {
-                statusLabel.Text = "Database Connection failed - check Connection String or contact Laura ASAP " +
-                ex.Message;
+                statusLabel.Text = "Database Connection failed - check Connection String or contact Laura ASAP " + ex.Message;
             }
         }
 
