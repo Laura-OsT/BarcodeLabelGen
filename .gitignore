@@ -2,6 +2,7 @@
 .vs/
 *.user
 *.suo
+*.vsidx
 
 # Ignore build output
 bin/
