@@ -8,6 +8,7 @@ using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
 using System.Drawing;
+using ZXing;
 
 
 namespace WindowsFormsApp1
@@ -220,9 +221,27 @@ namespace WindowsFormsApp1
                 output.Items.Add("No items found matching the search criteria.");
             }
         }
+        //Generate barcode
+        private Bitmap GenerateBarcode(string itemCode)
+            {
+                BarcodeWriter barcodeWriter = new BarcodeWriter
+                {
+                    Format = BarcodeFormat.CODE_128, // Choose the barcode format, CODE_128 is a good option
+                    Options = new ZXing.Common.EncodingOptions
+                    {
+                        Width = 150,  // Set the width of the barcode
+                        Height = 60,  // Set the height of the barcode
+                        Margin = 2    // Set the margin around the barcode
+                    }
+                };
 
-        //Label preview
-        private void ShowLabelPreviewInPopup(Bitmap labelBitmap)
+        // Generate the barcode image from the itemCode
+        return barcodeWriter.Write(itemCode);
+    }
+
+    //
+    //Label preview
+    private void ShowLabelPreviewInPopup(Bitmap labelBitmap)
         {
             FormLabelPreview previewForm = new FormLabelPreview(); // Create a new pop-up form
             previewForm.SetLabelImage(labelBitmap); // Set the label image in the form
@@ -232,24 +251,24 @@ namespace WindowsFormsApp1
         private void GenerateLabelPreview(string itemName, string suppCatNum, string itemCode, decimal price, string buyUnitMsr, string codeBars)
         {
             // Create a bitmap for the label preview
-            Bitmap labelBitmap = new Bitmap(180, 106); // Adjust the size to your label's dimensions (4.5 cm x 2.5 cm)
+            Bitmap labelBitmap = new Bitmap(250, 180); // Adjust the size to your label's dimensions (4.5 cm x 2.5 cm)
 
             using (Graphics g = Graphics.FromImage(labelBitmap))
             {
                 g.Clear(Color.White); // Set the background color to white
 
                 // Draw product information onto the label
-                using (Font font = new Font("Arial", 10, FontStyle.Bold))
+                using (Font font = new Font("Arial", 8, FontStyle.Bold))
                 {
                     g.DrawString(itemName, font, Brushes.Black, new PointF(10, 5)); // Product Name
                 }
 
-                using (Font font = new Font("Arial", 10))
+                using (Font font = new Font("Arial", 6))
                 {
                     g.DrawString($"{suppCatNum}", font, Brushes.Black, new PointF(10, 30)); // Model Number
                 }
 
-                using (Font font = new Font("Arial", 8))
+                using (Font font = new Font("Arial", 6))
                 {
                     g.DrawString($"{itemCode}", font, Brushes.Black, new PointF(10, 50)); // SKU
                 }
@@ -263,6 +282,10 @@ namespace WindowsFormsApp1
                 {
                     g.DrawString($"{buyUnitMsr}", font, Brushes.Black, new PointF(110, 70)); // Units of Measure
                 }
+
+                // Generate the barcode image
+                Bitmap barcodeImage = GenerateBarcode(itemCode);
+                g.DrawImage(barcodeImage, new PointF(10, 100)); // Draw the barcode below the text
 
                 // No need to draw codeBars as it is not required on the label.
                 // You can keep it in the parameters for other internal logic if necessary.
