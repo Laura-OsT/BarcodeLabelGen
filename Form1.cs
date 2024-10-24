@@ -231,7 +231,7 @@ namespace WindowsFormsApp1
                     {
                         Width = 120,  // Set the width of the barcode
                         Height = 50,  // Set the height of the barcode
-                        Margin = 0    // Set the margin around the barcode
+                        Margin = 2    // Set the margin around the barcode
                     }
                 };
 
@@ -303,7 +303,7 @@ namespace WindowsFormsApp1
             string zpl = $@"
             ^XA
             ^FO10,10^A0N,30,30^FD{itemName}^FS               // Product Name
-            ^FO10,50^A0N,24,24^FDModel: {suppCatNum}^FS       // Model Number
+            ^FO10,50^A0N,24,24^FD: {suppCatNum}^FS       // Model Number
             ^FO10,90^GB200,0,3^FS                            // Line Separator
             ^FO10,100^B3N,N,60,Y,N^FD{itemCode}^FS            // Barcode for ItemCode (Code 128)
             ^FO120,160^A0N,24,24^FDPrice: ${price:F2}^FS      // Price
