@@ -48,7 +48,7 @@ namespace WindowsFormsApp1
                 }
                 else
                 {
-                    MessageBox.Show("Label sent to Zebra printer successfully!");
+                    MessageBox.Show("Sent to printer successfully!");
                 }
             }
             else

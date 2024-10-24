@@ -223,21 +223,27 @@ namespace WindowsFormsApp1
         }
         //Generate barcode
         private Bitmap GenerateBarcode(string itemCode)
+        {
+            BarcodeWriter barcodeWriter = new BarcodeWriter
             {
-                BarcodeWriter barcodeWriter = new BarcodeWriter
+                Format = BarcodeFormat.CODE_128,
+                Options = new ZXing.Common.EncodingOptions
                 {
-                    Format = BarcodeFormat.CODE_128, // Choose the barcode format, CODE_128 is a good option
-                    Options = new ZXing.Common.EncodingOptions
-                    {
-                        Width = 120,  // Set the width of the barcode
-                        Height = 50,  // Set the height of the barcode
-                        Margin = 2    // Set the margin around the barcode
-                    }
-                };
+                    Width = 100,  // Set width to fit within 180x106
+                    Height = 40,  // Set height to fit within label space
+                    Margin = 0    // Remove margin for better fit
+                },
+                Renderer = new ZXing.Rendering.BitmapRenderer
+                {
+                    Background = System.Drawing.Color.Transparent, // Keep background transparent
+                    Foreground = System.Drawing.Color.Black
+                }
+            };
 
-        // Generate the barcode image from the itemCode
-        return barcodeWriter.Write(itemCode);
-    }
+            // Generate the barcode image from the itemCode
+            return barcodeWriter.Write(itemCode);
+        }
+
 
         //
         //Label preview
@@ -252,15 +258,15 @@ namespace WindowsFormsApp1
 
         private void GenerateLabelPreview(string itemName, string suppCatNum, string itemCode, decimal price, string buyUnitMsr, string codeBars)
         {
-            // Create a bitmap for the label preview
-            Bitmap labelBitmap = new Bitmap(180, 106); // Adjust the size to your label's dimensions (4.5 cm x 2.5 cm)
+            // Create a bitmap for the label preview with the fixed size of 180x106
+            Bitmap labelBitmap = new Bitmap(180, 106);
 
             using (Graphics g = Graphics.FromImage(labelBitmap))
             {
                 g.Clear(Color.White); // Set the background color to white
 
                 // Draw product information onto the label
-                using (Font font = new Font("Arial", 10, FontStyle.Bold))
+                using (Font font = new Font("Arial", 9, FontStyle.Bold))
                 {
                     g.DrawString(itemName, font, Brushes.Black, new PointF(10, 5)); // Product Name
                 }
@@ -270,25 +276,25 @@ namespace WindowsFormsApp1
                     g.DrawString($"{suppCatNum}", font, Brushes.Black, new PointF(10, 25)); // Model Number
                 }
 
-                
-
-                using (Font font = new Font("Arial", 10, FontStyle.Bold))
-                {
-                    g.DrawString($"${price:F2}", font, Brushes.Black, new PointF(120, 60)); // Price
-                }
-
-                using (Font font = new Font("Arial", 6))
-                {
-                    g.DrawString($"{buyUnitMsr}", font, Brushes.Black, new PointF(150, 80)); // Units of Measure
-                }
-
                 // Generate the barcode image
                 Bitmap barcodeImage = GenerateBarcode(itemCode);
-                g.DrawImage(barcodeImage, new PointF(10, 50)); // Draw the barcode below the text
 
-                // No need to draw codeBars as it is not required on the label.
-                // You can keep it in the parameters for other internal logic if necessary.
+                // Draw the barcode with adjusted size and position
+                g.DrawImage(barcodeImage, new Rectangle(10, 30, 60, 30)); // Adjusted position and size for the barcode
+
+                using (Font font = new Font("Arial", 9, FontStyle.Bold))
+                {
+                    // Draw price next to the barcode, aligned at the right
+                    g.DrawString($"${price:F2}", font, Brushes.Black, new PointF(10, 40)); // Adjust position to avoid overlap
+                }
+
+                using (Font font = new Font("Arial", 8))
+                {
+                    // Draw the unit of measure below the price
+                    g.DrawString($"{buyUnitMsr}", font, Brushes.Black, new PointF(10, 60)); // Adjust position for better alignment
+                }
             }
+
             // Generate the ZPL string for printing
             string zplCommand = GenerateZpl(itemName, suppCatNum, itemCode, price, buyUnitMsr, labelBitmap);
 
@@ -296,23 +302,25 @@ namespace WindowsFormsApp1
             ShowLabelPreviewInPopup(labelBitmap, zplCommand);
         }
 
+
         // Printing on the Zebra printer
         private string GenerateZpl(string itemName, string suppCatNum, string itemCode, decimal price, string buyUnitMsr, Bitmap barcodeImage)
         {
             // Create the ZPL command string for the label
             string zpl = $@"
             ^XA
-            ^FO10,10^A0N,30,30^FD{itemName}^FS               // Product Name
-            ^FO10,50^A0N,24,24^FD: {suppCatNum}^FS       // Model Number
+            ^FO10,30^A0N,30,30^FD{itemName}^FS               // Product Name
+            ^FO10,60^A0N,24,24^FD{suppCatNum}^FS              // Model Number
             ^FO10,90^GB200,0,3^FS                            // Line Separator
-            ^FO10,100^B3N,N,60,Y,N^FD{itemCode}^FS            // Barcode for ItemCode (Code 128)
-            ^FO120,160^A0N,24,24^FDPrice: ${price:F2}^FS      // Price
-            ^FO120,190^A0N,24,24^FD{buyUnitMsr} each^FS       // Units of Measure
+            ^FO10,100^BY2,2,50^B3N,N,60,Y,N^FD{itemCode}^FS    // Barcode for ItemCode (Code 128) with reduced size
+            ^FO250,160^A0N,24,24^FR^FD${price:F2}^FS          // Price (right-aligned)
+            ^FO250,190^A0N,24,24^FR^FD{buyUnitMsr} each^FS    // Units of Measure (right-aligned)
             ^XZ
             ";
 
             return zpl;
         }
+
 
 
         //Print the label preview
