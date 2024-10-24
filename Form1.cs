@@ -258,26 +258,26 @@ namespace WindowsFormsApp1
                 g.Clear(Color.White); // Set the background color to white
 
                 // Draw product information onto the label
-                using (Font font = new Font("Arial", 8, FontStyle.Bold))
+                using (Font font = new Font("Arial", 10, FontStyle.Bold))
                 {
                     g.DrawString(itemName, font, Brushes.Black, new PointF(10, 5)); // Product Name
                 }
 
-                using (Font font = new Font("Arial", 6))
+                using (Font font = new Font("Arial", 8))
                 {
                     g.DrawString($"{suppCatNum}", font, Brushes.Black, new PointF(10, 25)); // Model Number
                 }
 
                 
 
-                using (Font font = new Font("Arial", 8, FontStyle.Bold))
+                using (Font font = new Font("Arial", 10, FontStyle.Bold))
                 {
-                    g.DrawString($"${price:F2}", font, Brushes.Black, new PointF(120, 50)); // Price
+                    g.DrawString($"${price:F2}", font, Brushes.Black, new PointF(120, 60)); // Price
                 }
 
                 using (Font font = new Font("Arial", 6))
                 {
-                    g.DrawString($"{buyUnitMsr}", font, Brushes.Black, new PointF(120, 70)); // Units of Measure
+                    g.DrawString($"{buyUnitMsr}", font, Brushes.Black, new PointF(150, 80)); // Units of Measure
                 }
 
                 // Generate the barcode image
