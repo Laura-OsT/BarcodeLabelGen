@@ -229,9 +229,9 @@ namespace WindowsFormsApp1
                     Format = BarcodeFormat.CODE_128, // Choose the barcode format, CODE_128 is a good option
                     Options = new ZXing.Common.EncodingOptions
                     {
-                        Width = 150,  // Set the width of the barcode
-                        Height = 60,  // Set the height of the barcode
-                        Margin = 2    // Set the margin around the barcode
+                        Width = 120,  // Set the width of the barcode
+                        Height = 50,  // Set the height of the barcode
+                        Margin = 0    // Set the margin around the barcode
                     }
                 };
 
@@ -251,7 +251,7 @@ namespace WindowsFormsApp1
         private void GenerateLabelPreview(string itemName, string suppCatNum, string itemCode, decimal price, string buyUnitMsr, string codeBars)
         {
             // Create a bitmap for the label preview
-            Bitmap labelBitmap = new Bitmap(250, 180); // Adjust the size to your label's dimensions (4.5 cm x 2.5 cm)
+            Bitmap labelBitmap = new Bitmap(180, 106); // Adjust the size to your label's dimensions (4.5 cm x 2.5 cm)
 
             using (Graphics g = Graphics.FromImage(labelBitmap))
             {
@@ -265,27 +265,24 @@ namespace WindowsFormsApp1
 
                 using (Font font = new Font("Arial", 6))
                 {
-                    g.DrawString($"{suppCatNum}", font, Brushes.Black, new PointF(10, 30)); // Model Number
+                    g.DrawString($"{suppCatNum}", font, Brushes.Black, new PointF(10, 25)); // Model Number
                 }
 
-                using (Font font = new Font("Arial", 6))
-                {
-                    g.DrawString($"{itemCode}", font, Brushes.Black, new PointF(10, 50)); // SKU
-                }
+                
 
                 using (Font font = new Font("Arial", 8, FontStyle.Bold))
                 {
-                    g.DrawString($"${price:F2}", font, Brushes.Black, new PointF(10, 70)); // Price
+                    g.DrawString($"${price:F2}", font, Brushes.Black, new PointF(120, 50)); // Price
                 }
 
                 using (Font font = new Font("Arial", 6))
                 {
-                    g.DrawString($"{buyUnitMsr}", font, Brushes.Black, new PointF(110, 70)); // Units of Measure
+                    g.DrawString($"{buyUnitMsr}", font, Brushes.Black, new PointF(120, 70)); // Units of Measure
                 }
 
                 // Generate the barcode image
                 Bitmap barcodeImage = GenerateBarcode(itemCode);
-                g.DrawImage(barcodeImage, new PointF(10, 100)); // Draw the barcode below the text
+                g.DrawImage(barcodeImage, new PointF(10, 50)); // Draw the barcode below the text
 
                 // No need to draw codeBars as it is not required on the label.
                 // You can keep it in the parameters for other internal logic if necessary.
