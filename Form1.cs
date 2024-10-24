@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Drawing;
 
 
 namespace WindowsFormsApp1
@@ -217,6 +218,82 @@ namespace WindowsFormsApp1
             else
             {
                 output.Items.Add("No items found matching the search criteria.");
+            }
+        }
+
+        //Label preview
+        private void ShowLabelPreviewInPopup(Bitmap labelBitmap)
+        {
+            FormLabelPreview previewForm = new FormLabelPreview(); // Create a new pop-up form
+            previewForm.SetLabelImage(labelBitmap); // Set the label image in the form
+            previewForm.ShowDialog(); // Show the form as a modal pop-up
+        }
+
+        private void GenerateLabelPreview(string itemName, string suppCatNum, string itemCode, decimal price, string buyUnitMsr, string codeBars)
+        {
+            // Create a bitmap for the label preview
+            Bitmap labelBitmap = new Bitmap(180, 106); // Adjust the size to your label's dimensions (4.5 cm x 2.5 cm)
+
+            using (Graphics g = Graphics.FromImage(labelBitmap))
+            {
+                g.Clear(Color.White); // Set the background color to white
+
+                // Draw product information onto the label
+                using (Font font = new Font("Arial", 10, FontStyle.Bold))
+                {
+                    g.DrawString(itemName, font, Brushes.Black, new PointF(10, 5)); // Product Name
+                }
+
+                using (Font font = new Font("Arial", 10))
+                {
+                    g.DrawString($"{suppCatNum}", font, Brushes.Black, new PointF(10, 30)); // Model Number
+                }
+
+                using (Font font = new Font("Arial", 8))
+                {
+                    g.DrawString($"{itemCode}", font, Brushes.Black, new PointF(10, 50)); // SKU
+                }
+
+                using (Font font = new Font("Arial", 8, FontStyle.Bold))
+                {
+                    g.DrawString($"${price:F2}", font, Brushes.Black, new PointF(10, 70)); // Price
+                }
+
+                using (Font font = new Font("Arial", 6))
+                {
+                    g.DrawString($"{buyUnitMsr}", font, Brushes.Black, new PointF(110, 70)); // Units of Measure
+                }
+
+                // No need to draw codeBars as it is not required on the label.
+                // You can keep it in the parameters for other internal logic if necessary.
+            }
+
+            // Show the label preview in a pop-up window
+            ShowLabelPreviewInPopup(labelBitmap);
+        }
+
+
+
+        //Print the label preview
+        private void printBtn_Click(object sender, EventArgs e)
+        {
+            if (output.Items.Count > 0)
+            {
+                // Extract the relevant data from the ListBox output
+                string itemCode = output.Items[0].ToString().Split(':')[1].Trim();
+                string itemName = output.Items[1].ToString().Split(':')[1].Trim();
+                string codeBars = output.Items[2].ToString().Split(':')[1].Trim(); // Keep extracting it if needed internally
+                string suppCatNum = output.Items[3].ToString().Split(':')[1].Trim();
+                string priceString = output.Items[4].ToString().Split('$')[1].Trim();
+                decimal price = Convert.ToDecimal(priceString);
+                string buyUnitMsr = output.Items[8].ToString().Split(':')[1].Trim();
+
+                // Generate the label without showing the codeBars
+                GenerateLabelPreview(itemName, suppCatNum, itemCode, price, buyUnitMsr, codeBars); // codeBars will not be displayed
+            }
+            else
+            {
+                MessageBox.Show("No data to print. Please search and select a product first.");
             }
         }
 
