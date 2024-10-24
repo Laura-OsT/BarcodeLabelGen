@@ -239,17 +239,17 @@ namespace WindowsFormsApp1
                 g.Clear(Color.White); // Set the background color to white
 
                 // Draw product information onto the label
-                using (Font font = new Font("Arial", 10, FontStyle.Bold))
+                using (Font font = new Font("Arial", 8, FontStyle.Bold))
                 {
                     g.DrawString(itemName, font, Brushes.Black, new PointF(10, 5)); // Product Name
                 }
 
-                using (Font font = new Font("Arial", 10))
+                using (Font font = new Font("Arial", 6))
                 {
                     g.DrawString($"{suppCatNum}", font, Brushes.Black, new PointF(10, 30)); // Model Number
                 }
 
-                using (Font font = new Font("Arial", 8))
+                using (Font font = new Font("Arial", 6))
                 {
                     g.DrawString($"{itemCode}", font, Brushes.Black, new PointF(10, 50)); // SKU
                 }
