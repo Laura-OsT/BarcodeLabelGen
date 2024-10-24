@@ -239,14 +239,16 @@ namespace WindowsFormsApp1
         return barcodeWriter.Write(itemCode);
     }
 
-    //
-    //Label preview
-    private void ShowLabelPreviewInPopup(Bitmap labelBitmap)
+        //
+        //Label preview
+        private void ShowLabelPreviewInPopup(Bitmap labelBitmap, string zplCommand)
         {
-            FormLabelPreview previewForm = new FormLabelPreview(); // Create a new pop-up form
-            previewForm.SetLabelImage(labelBitmap); // Set the label image in the form
-            previewForm.ShowDialog(); // Show the form as a modal pop-up
+            FormLabelPreview previewForm = new FormLabelPreview();
+            previewForm.SetLabelImage(labelBitmap); // Use the SetLabelImage method to show the preview
+            previewForm.SetZplCommand(zplCommand);  // Use the SetZplCommand method to store the ZPL command
+            previewForm.ShowDialog();               // Show the form as a modal pop-up
         }
+
 
         private void GenerateLabelPreview(string itemName, string suppCatNum, string itemCode, decimal price, string buyUnitMsr, string codeBars)
         {
@@ -287,11 +289,30 @@ namespace WindowsFormsApp1
                 // No need to draw codeBars as it is not required on the label.
                 // You can keep it in the parameters for other internal logic if necessary.
             }
+            // Generate the ZPL string for printing
+            string zplCommand = GenerateZpl(itemName, suppCatNum, itemCode, price, buyUnitMsr, labelBitmap);
 
             // Show the label preview in a pop-up window
-            ShowLabelPreviewInPopup(labelBitmap);
+            ShowLabelPreviewInPopup(labelBitmap, zplCommand);
         }
 
+        // Printing on the Zebra printer
+        private string GenerateZpl(string itemName, string suppCatNum, string itemCode, decimal price, string buyUnitMsr, Bitmap barcodeImage)
+        {
+            // Create the ZPL command string for the label
+            string zpl = $@"
+            ^XA
+            ^FO10,10^A0N,30,30^FD{itemName}^FS               // Product Name
+            ^FO10,50^A0N,24,24^FDModel: {suppCatNum}^FS       // Model Number
+            ^FO10,90^GB200,0,3^FS                            // Line Separator
+            ^FO10,100^B3N,N,60,Y,N^FD{itemCode}^FS            // Barcode for ItemCode (Code 128)
+            ^FO120,160^A0N,24,24^FDPrice: ${price:F2}^FS      // Price
+            ^FO120,190^A0N,24,24^FD{buyUnitMsr} each^FS       // Units of Measure
+            ^XZ
+            ";
+
+            return zpl;
+        }
 
 
         //Print the label preview
@@ -302,20 +323,26 @@ namespace WindowsFormsApp1
                 // Extract the relevant data from the ListBox output
                 string itemCode = output.Items[0].ToString().Split(':')[1].Trim();
                 string itemName = output.Items[1].ToString().Split(':')[1].Trim();
-                string codeBars = output.Items[2].ToString().Split(':')[1].Trim(); // Keep extracting it if needed internally
                 string suppCatNum = output.Items[3].ToString().Split(':')[1].Trim();
                 string priceString = output.Items[4].ToString().Split('$')[1].Trim();
                 decimal price = Convert.ToDecimal(priceString);
                 string buyUnitMsr = output.Items[8].ToString().Split(':')[1].Trim();
 
-                // Generate the label without showing the codeBars
-                GenerateLabelPreview(itemName, suppCatNum, itemCode, price, buyUnitMsr, codeBars); // codeBars will not be displayed
+                // Generate barcode image
+                Bitmap barcodeImage = GenerateBarcode(itemCode);
+
+                // Generate ZPL string
+                string zplCommand = GenerateZpl(itemName, suppCatNum, itemCode, price, buyUnitMsr, barcodeImage);
+
+                // Show the label preview with ZPL command
+                ShowLabelPreviewInPopup(barcodeImage, zplCommand);
             }
             else
             {
                 MessageBox.Show("No data to print. Please search and select a product first.");
             }
         }
+
 
 
         private void closeBtn_Click(object sender, EventArgs e)
@@ -344,10 +371,11 @@ namespace WindowsFormsApp1
         // Declare dataTable at the class level
         private DataTable dataTable = new DataTable();
 
-        // Your existing RetrieveAndShowData method
        
 
-        // Your existing importBtn_Click method
+
+
+        // importBtn_Click method
         private void importBtn_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
