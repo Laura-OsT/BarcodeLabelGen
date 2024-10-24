@@ -28,3 +28,39 @@ C:\Users\csfla\OneDrive\Documents\GitHub\LabelGenerator\obj\Debug\WindowsFormsAp
 C:\Users\csfla\OneDrive\Documents\GitHub\LabelGenerator\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
 C:\Users\csfla\OneDrive\Documents\GitHub\LabelGenerator\obj\Debug\WindowsFormsApp1.exe
 C:\Users\csfla\OneDrive\Documents\GitHub\LabelGenerator\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Debug\libSkiaSharp.dylib
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Debug\x86\libSkiaSharp.dll
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Debug\x64\libSkiaSharp.dll
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Debug\arm64\libSkiaSharp.dll
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Debug\WindowsFormsApp1.exe.config
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Debug\WindowsFormsApp1.exe.manifest
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Debug\WindowsFormsApp1.application
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Debug\WindowsFormsApp1.exe
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Debug\WindowsFormsApp1.pdb
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Debug\SharpZebraStandard.dll
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Debug\SkiaSharp.dll
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Debug\System.Buffers.dll
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Debug\System.Drawing.Common.dll
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Debug\System.Memory.dll
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Debug\SkiaSharp.pdb
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Debug\SkiaSharp.xml
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Debug\System.Buffers.xml
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Debug\System.Drawing.Common.pdb
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Debug\System.Drawing.Common.xml
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Debug\System.Memory.xml
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\obj\Debug\WindowsFormsApp1.csproj.AssemblyReference.cache
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\obj\Debug\WindowsFormsApp1.Form1.resources
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.cache
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\obj\Debug\WindowsFormsApp1.TrustInfo.xml
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\obj\Debug\WindowsFormsApp1.exe.manifest
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\obj\Debug\WindowsFormsApp1.application
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\obj\Debug\WindowsF.A1EEDF9B.Up2Date
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\obj\Debug\WindowsFormsApp1.exe
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\obj\Debug\WindowsFormsApp1.pdb
+C:\Users\Laura Osorio\Documents\GitHub\LabelGenerator\obj\Debug\WindowsFormsApp1.FormLabelPreview.resources

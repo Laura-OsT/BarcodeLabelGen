@@ -154,6 +154,7 @@
             this.printBtn.TabIndex = 15;
             this.printBtn.Text = "Print";
             this.printBtn.UseVisualStyleBackColor = true;
+            this.printBtn.Click += new System.EventHandler(this.printBtn_Click);
             // 
             // searchBtn
             // 
