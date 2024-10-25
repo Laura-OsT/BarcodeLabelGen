@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLabelPreview));
             this.pictureBoxLabel = new System.Windows.Forms.PictureBox();
             this.label5 = new System.Windows.Forms.Label();
             this.zebraPrintButton = new System.Windows.Forms.Button();
@@ -58,8 +59,8 @@
             // 
             // zebraPrintButton
             // 
-            this.zebraPrintButton.Font = new System.Drawing.Font("Cambria", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.zebraPrintButton.Location = new System.Drawing.Point(323, 288);
+            this.zebraPrintButton.Font = new System.Drawing.Font("Cambria", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.zebraPrintButton.Location = new System.Drawing.Point(337, 286);
             this.zebraPrintButton.Name = "zebraPrintButton";
             this.zebraPrintButton.Size = new System.Drawing.Size(97, 46);
             this.zebraPrintButton.TabIndex = 19;
@@ -71,7 +72,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Cambria", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(35, 296);
+            this.label1.Location = new System.Drawing.Point(46, 298);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(76, 23);
             this.label1.TabIndex = 21;
@@ -79,9 +80,9 @@
             // 
             // numericUpDownCopies
             // 
-            this.numericUpDownCopies.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.numericUpDownCopies.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.numericUpDownCopies.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.numericUpDownCopies.Location = new System.Drawing.Point(134, 296);
+            this.numericUpDownCopies.Location = new System.Drawing.Point(128, 296);
             this.numericUpDownCopies.Minimum = new decimal(new int[] {
             1,
             0,
@@ -98,12 +99,13 @@
             // 
             // FormLabelPreview
             // 
-            this.ClientSize = new System.Drawing.Size(522, 358);
+            this.ClientSize = new System.Drawing.Size(487, 357);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.numericUpDownCopies);
             this.Controls.Add(this.zebraPrintButton);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.pictureBoxLabel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormLabelPreview";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLabel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCopies)).EndInit();
