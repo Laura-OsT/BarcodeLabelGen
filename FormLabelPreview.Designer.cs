@@ -36,9 +36,10 @@
             // 
             // pictureBoxLabel
             // 
-            this.pictureBoxLabel.Location = new System.Drawing.Point(89, 92);
+            this.pictureBoxLabel.Location = new System.Drawing.Point(60, 81);
             this.pictureBoxLabel.Name = "pictureBoxLabel";
             this.pictureBoxLabel.Size = new System.Drawing.Size(355, 178);
+            this.pictureBoxLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxLabel.TabIndex = 0;
             this.pictureBoxLabel.TabStop = false;
             // 
@@ -78,7 +79,7 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
+        //private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.PictureBox pictureBoxLabel;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button zebraPrintButton;

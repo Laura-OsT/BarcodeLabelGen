@@ -21,11 +21,25 @@ namespace WindowsFormsApp1
             InitializeComponent();
         }
 
+
+
         // Method to set the label image in the PictureBox
         public void SetLabelImage(Bitmap labelImage)
         {
-            pictureBoxLabel.Image = labelImage; // Assuming you have a PictureBox named pictureBoxLabel
+            // Clear any existing image before setting a new one
+            if (pictureBoxLabel.Image != null)
+            {
+                pictureBoxLabel.Image.Dispose(); // Dispose of the previous image to free memory
+                pictureBoxLabel.Image = null;
+            }
+
+            // Now set the new image
+            pictureBoxLabel.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBoxLabel.Image = labelImage;
         }
+
+
+
 
         // Method to set the ZPL command when the preview is generated
         public void SetZplCommand(string zpl)

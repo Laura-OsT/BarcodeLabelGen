@@ -21,6 +21,7 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
 
+
             try
             {
                 // Get the connection string from the environment variable
@@ -250,14 +251,18 @@ namespace WindowsFormsApp1
         private void ShowLabelPreviewInPopup(Bitmap labelBitmap, string zplCommand)
         {
             FormLabelPreview previewForm = new FormLabelPreview();
-            previewForm.SetLabelImage(labelBitmap); // Use the SetLabelImage method to show the preview
+            previewForm.SetLabelImage(labelBitmap); // Make sure this is setting the updated image
+            //MessageBox.Show("SetLabelImage called successfully.");
             previewForm.SetZplCommand(zplCommand);  // Use the SetZplCommand method to store the ZPL command
             previewForm.ShowDialog();               // Show the form as a modal pop-up
         }
 
 
+
+
         private void GenerateLabelPreview(string itemName, string suppCatNum, string itemCode, decimal price, string buyUnitMsr, string codeBars)
         {
+            //MessageBox.Show("GenerateLabelPreview method called."); // Debug message
             // Create a bitmap for the label preview with the fixed size of 180x106
             Bitmap labelBitmap = new Bitmap(180, 106);
 
@@ -265,33 +270,38 @@ namespace WindowsFormsApp1
             {
                 g.Clear(Color.White); // Set the background color to white
 
+                // DEBUG: Draw a border to visually confirm size
+                g.DrawRectangle(Pens.Black, 0, 0, labelBitmap.Width - 1, labelBitmap.Height - 1);
+
                 // Draw product information onto the label
                 using (Font font = new Font("Arial", 9, FontStyle.Bold))
                 {
-                    g.DrawString(itemName, font, Brushes.Black, new PointF(10, 5)); // Product Name
+                    // Draw the Product Name
+                    g.DrawString(itemName, font, Brushes.Black, new PointF(1, 5));
                 }
 
-                using (Font font = new Font("Arial", 8))
+                using (Font font = new Font("Arial", 9))
                 {
-                    g.DrawString($"{suppCatNum}", font, Brushes.Black, new PointF(10, 25)); // Model Number
+                    // Draw the Model Number
+                    g.DrawString(suppCatNum, font, Brushes.Black, new PointF(8, 25));
                 }
 
-                // Generate the barcode image
+                // Generate the barcode image with a smaller size to fit properly
                 Bitmap barcodeImage = GenerateBarcode(itemCode);
 
                 // Draw the barcode with adjusted size and position
-                g.DrawImage(barcodeImage, new Rectangle(10, 30, 60, 30)); // Adjusted position and size for the barcode
+                g.DrawImage(barcodeImage, new Rectangle(10, 55, 90, 40)); // Adjusted position and size for the barcode
 
-                using (Font font = new Font("Arial", 9, FontStyle.Bold))
+                using (Font font = new Font("Arial", 11, FontStyle.Bold))
                 {
                     // Draw price next to the barcode, aligned at the right
-                    g.DrawString($"${price:F2}", font, Brushes.Black, new PointF(10, 40)); // Adjust position to avoid overlap
+                    g.DrawString($"${price:F2}", font, Brushes.Black, new PointF(110, 50)); // Adjusted position to avoid overlap
                 }
 
                 using (Font font = new Font("Arial", 8))
                 {
                     // Draw the unit of measure below the price
-                    g.DrawString($"{buyUnitMsr}", font, Brushes.Black, new PointF(10, 60)); // Adjust position for better alignment
+                    g.DrawString($"{buyUnitMsr}", font, Brushes.Black, new PointF(120, 70)); // Adjusted position for better alignment
                 }
             }
 
@@ -301,6 +311,11 @@ namespace WindowsFormsApp1
             // Show the label preview in a pop-up window
             ShowLabelPreviewInPopup(labelBitmap, zplCommand);
         }
+
+
+
+
+
 
 
         // Printing on the Zebra printer
@@ -342,8 +357,8 @@ namespace WindowsFormsApp1
                 // Generate ZPL string
                 string zplCommand = GenerateZpl(itemName, suppCatNum, itemCode, price, buyUnitMsr, barcodeImage);
 
-                // Show the label preview with ZPL command
-                ShowLabelPreviewInPopup(barcodeImage, zplCommand);
+                // Generate label preview
+                GenerateLabelPreview(itemName, suppCatNum, itemCode, price, buyUnitMsr, string.Empty);
             }
             else
             {
