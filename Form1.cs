@@ -61,7 +61,7 @@ namespace WindowsFormsApp1
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'cSF_ProdDataSet.ITM1' table. You can move, or remove it, as needed.
+            // Loads data into the 'cSF_ProdDataSet.ITM1' table.
             this.iTM1TableAdapter.Fill(this.cSF_ProdDataSet.ITM1);
 
         }
@@ -231,7 +231,7 @@ namespace WindowsFormsApp1
                 Format = BarcodeFormat.CODE_128,
                 Options = new ZXing.Common.EncodingOptions
                 {
-                    Width = 100,  // Set width to fit within 180x106
+                    Width = 100,  // Set width to fit within 180x106 Zebra label size
                     Height = 40,  // Set height to fit within label space
                     Margin = 0    // Remove margin for better fit
                 },
@@ -247,8 +247,8 @@ namespace WindowsFormsApp1
         }
 
 
-        //
-        //Label preview
+        
+        //Label preview in popup window
         private void ShowLabelPreviewInPopup(Bitmap labelBitmap, string zplCommand, int numberOfCopies)
         {
             FormLabelPreview previewForm = new FormLabelPreview();
@@ -258,7 +258,7 @@ namespace WindowsFormsApp1
             previewForm.ShowDialog();               // Show the form as a modal pop-up
         }
 
-
+        //Generate the label preview as an image - Not for printing
         private Bitmap GenerateLabelPreviewImage(string itemName, string suppCatNum, string itemCode, decimal price, string buyUnitMsr)
         {
             // Create a bitmap for the label preview with the fixed size of 180x106
@@ -283,7 +283,7 @@ namespace WindowsFormsApp1
                 Bitmap barcodeImage = GenerateBarcode(itemCode);
 
                 // Draw the barcode with adjusted size and position
-                g.DrawImage(barcodeImage, new Rectangle(10, 60, 100, 40)); // Adjusted position and size for the barcode
+                g.DrawImage(barcodeImage, new Rectangle(10, 60, 100, 40)); 
 
                 using (Font font = new Font("Arial", 11, FontStyle.Bold))
                 {
@@ -300,7 +300,7 @@ namespace WindowsFormsApp1
         }
 
 
-
+        //Considering to remove this method and using just the preview image
         private void GenerateLabelPreview(string itemName, string suppCatNum, string itemCode, decimal price, string buyUnitMsr, string codeBars, int numberOfCopies)
         {
             // Create the label preview as before
@@ -328,18 +328,18 @@ namespace WindowsFormsApp1
                 Bitmap barcodeImage = GenerateBarcode(itemCode);
 
                 // Draw the barcode with adjusted size and position
-                g.DrawImage(barcodeImage, new Rectangle(10, 55, 90, 40)); // Adjusted position and size for the barcode
+                g.DrawImage(barcodeImage, new Rectangle(10, 55, 90, 40)); 
 
                 using (Font font = new Font("Arial", 11, FontStyle.Bold))
                 {
                     // Draw price next to the barcode, aligned at the right
-                    g.DrawString($"${price:F2}", font, Brushes.Black, new PointF(110, 50)); // Adjusted position to avoid overlap
+                    g.DrawString($"${price:F2}", font, Brushes.Black, new PointF(110, 50)); 
                 }
 
                 using (Font font = new Font("Arial", 8))
                 {
                     // Draw the unit of measure below the price
-                    g.DrawString($"{buyUnitMsr}", font, Brushes.Black, new PointF(120, 70)); // Adjusted position for better alignment
+                    g.DrawString($"{buyUnitMsr}", font, Brushes.Black, new PointF(120, 70)); 
                 }
             }
 

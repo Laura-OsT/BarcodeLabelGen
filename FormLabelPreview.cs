@@ -14,23 +14,24 @@ namespace WindowsFormsApp1
     public partial class FormLabelPreview : Form
     {
         private string zplCommand; // Store the ZPL command to be printed
-        private string printerName = "ZDesigner TLP 2824 Plus (ZPL)"; // Set the printer name
+        private string printerName = "ZDesigner TLP 2824 Plus (ZPL)"; // Set the printer name, EXACTLY as it appears on 'Printers and Scanners'
 
 
         public FormLabelPreview()
         {
             InitializeComponent();
 
+            //Up-Down method for choosing copies to print
             numericUpDownCopies.Minimum = 1; // Minimum value set to 1
-            numericUpDownCopies.Maximum = 50; // Set the maximum as you desire
+            numericUpDownCopies.Maximum = 50; // Maximum set to 50, or as preferred
             numericUpDownCopies.Value = 1;    // Default value
 
-            // Update Print button's position if needed
+            //Print button's position
             this.zebraPrintButton.Location = new System.Drawing.Point(233, 300);
 
         }
 
-        // Add a field to store the number of copies
+        // Store the number of copies
         private int numberOfCopies = 1; // Default to 1
 
         // Method to set the number of copies
@@ -57,7 +58,7 @@ namespace WindowsFormsApp1
                 pictureBoxLabel.Image = null;
             }
 
-            // Now set the new image
+            // Set the new image
             pictureBoxLabel.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBoxLabel.Image = labelImage;
         }
@@ -71,7 +72,7 @@ namespace WindowsFormsApp1
             zplCommand = zpl;
         }
 
-        // Method to handle the print button click
+        // Method to handle the print button click for the Zebra printer
         private void zebraPrintButton_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(zplCommand))
