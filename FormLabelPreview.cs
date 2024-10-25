@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -13,12 +14,35 @@ namespace WindowsFormsApp1
     public partial class FormLabelPreview : Form
     {
         private string zplCommand; // Store the ZPL command to be printed
-        private string printerName = "Zebra TLP 2824 Plus"; // Set the printer name
-        
+        private string printerName = "ZDesigner TLP 2824 Plus (ZPL)"; // Set the printer name
+
 
         public FormLabelPreview()
         {
             InitializeComponent();
+
+            numericUpDownCopies.Minimum = 1; // Minimum value set to 1
+            numericUpDownCopies.Maximum = 50; // Set the maximum as you desire
+            numericUpDownCopies.Value = 1;    // Default value
+
+            // Update Print button's position if needed
+            this.zebraPrintButton.Location = new System.Drawing.Point(233, 300);
+
+        }
+
+        // Add a field to store the number of copies
+        private int numberOfCopies = 1; // Default to 1
+
+        // Method to set the number of copies
+        public void SetNumberOfCopies(int copies)
+        {
+            numberOfCopies = copies;
+            numericUpDownCopies.Value = copies; // Reflect the number in the UI
+        }
+
+        public int GetNumberOfCopies()
+        {
+            return (int)numericUpDownCopies.Value;
         }
 
 
@@ -52,8 +76,29 @@ namespace WindowsFormsApp1
         {
             if (!string.IsNullOrEmpty(zplCommand))
             {
+                // Retrieve the number of copies from the NumericUpDown control
+                int numberOfCopies = (int)numericUpDownCopies.Value;
+
+                // If the command contains ^PQ, replace it; otherwise, append the correct ^PQ command
+                if (zplCommand.Contains("^PQ"))
+                {
+                    // Update the existing ^PQ command to reflect the correct number of copies
+                    zplCommand = System.Text.RegularExpressions.Regex.Replace(zplCommand, @"\^PQ\d+", $"^PQ{numberOfCopies}");
+                    // Debugging to verify the updated ZPL command
+                    //MessageBox.Show("Updated ZPL Command:\n" + zplCommand);
+
+                }
+                else
+                {
+                    // If ^PQ isn't found, add it before the ^XZ (end of the ZPL command)
+                    int insertPosition = zplCommand.LastIndexOf("^XZ");
+                    if (insertPosition > 0)
+                    {
+                        zplCommand = zplCommand.Insert(insertPosition, $"^PQ{numberOfCopies}");
+                    }
+                }
+
                 // Send ZPL command to the printer using RawPrinterHelper
-                string printerName = "ZDesigner TLP 2824 Plus (ZPL)"; // Replace with your printer's name
                 bool success = RawPrinterHelper.SendStringToPrinter(printerName, zplCommand);
 
                 if (!success)
@@ -71,5 +116,11 @@ namespace WindowsFormsApp1
             }
         }
 
+
+
     }
+
+
+
+
 }

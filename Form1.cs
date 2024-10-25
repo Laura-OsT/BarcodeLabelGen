@@ -22,6 +22,7 @@ namespace WindowsFormsApp1
             InitializeComponent();
 
 
+
             try
             {
                 // Get the connection string from the environment variable
@@ -248,21 +249,18 @@ namespace WindowsFormsApp1
 
         //
         //Label preview
-        private void ShowLabelPreviewInPopup(Bitmap labelBitmap, string zplCommand)
+        private void ShowLabelPreviewInPopup(Bitmap labelBitmap, string zplCommand, int numberOfCopies)
         {
             FormLabelPreview previewForm = new FormLabelPreview();
-            previewForm.SetLabelImage(labelBitmap); // Make sure this is setting the updated image
-            //MessageBox.Show("SetLabelImage called successfully.");
-            previewForm.SetZplCommand(zplCommand);  // Use the SetZplCommand method to store the ZPL command
+            previewForm.SetLabelImage(labelBitmap); // Set the label image in the preview
+            previewForm.SetZplCommand(zplCommand);  // Set the ZPL command
+            previewForm.SetNumberOfCopies(numberOfCopies); // Pass the number of copies
             previewForm.ShowDialog();               // Show the form as a modal pop-up
         }
 
 
-
-
-        private void GenerateLabelPreview(string itemName, string suppCatNum, string itemCode, decimal price, string buyUnitMsr, string codeBars)
+        private Bitmap GenerateLabelPreviewImage(string itemName, string suppCatNum, string itemCode, decimal price, string buyUnitMsr)
         {
-            //MessageBox.Show("GenerateLabelPreview method called."); // Debug message
             // Create a bitmap for the label preview with the fixed size of 180x106
             Bitmap labelBitmap = new Bitmap(180, 106);
 
@@ -270,7 +268,47 @@ namespace WindowsFormsApp1
             {
                 g.Clear(Color.White); // Set the background color to white
 
-                // DEBUG: Draw a border to visually confirm size
+                // Draw product information onto the label
+                using (Font font = new Font("Arial", 10, FontStyle.Bold))
+                {
+                    g.DrawString(itemName, font, Brushes.Black, new PointF(1, 5)); // Product Name
+                }
+
+                using (Font font = new Font("Arial", 10))
+                {
+                    g.DrawString(suppCatNum, font, Brushes.Black, new PointF(5, 25)); // Model Number
+                }
+
+                // Generate the barcode image
+                Bitmap barcodeImage = GenerateBarcode(itemCode);
+
+                // Draw the barcode with adjusted size and position
+                g.DrawImage(barcodeImage, new Rectangle(10, 60, 100, 40)); // Adjusted position and size for the barcode
+
+                using (Font font = new Font("Arial", 11, FontStyle.Bold))
+                {
+                    g.DrawString($"${price:F2}", font, Brushes.Black, new PointF(110, 60)); // Adjusted position to avoid overlap
+                }
+
+                using (Font font = new Font("Arial", 8))
+                {
+                    g.DrawString($"{buyUnitMsr}", font, Brushes.Black, new PointF(120, 80)); // Adjusted position for better alignment
+                }
+            }
+
+            return labelBitmap;
+        }
+
+
+
+        private void GenerateLabelPreview(string itemName, string suppCatNum, string itemCode, decimal price, string buyUnitMsr, string codeBars, int numberOfCopies)
+        {
+            // Create the label preview as before
+            Bitmap labelBitmap = new Bitmap(180, 106);
+
+            using (Graphics g = Graphics.FromImage(labelBitmap))
+            {
+                g.Clear(Color.White);
                 g.DrawRectangle(Pens.Black, 0, 0, labelBitmap.Width - 1, labelBitmap.Height - 1);
 
                 // Draw product information onto the label
@@ -305,11 +343,11 @@ namespace WindowsFormsApp1
                 }
             }
 
-            // Generate the ZPL string for printing
-            string zplCommand = GenerateZpl(itemName, suppCatNum, itemCode, price, buyUnitMsr, labelBitmap);
+            // Generate the ZPL string with the correct number of copies
+            string zplCommand = GenerateZpl(itemName, suppCatNum, itemCode, price, buyUnitMsr, labelBitmap, numberOfCopies);
 
             // Show the label preview in a pop-up window
-            ShowLabelPreviewInPopup(labelBitmap, zplCommand);
+            ShowLabelPreviewInPopup(labelBitmap, zplCommand, numberOfCopies);
         }
 
 
@@ -319,9 +357,9 @@ namespace WindowsFormsApp1
 
 
         // Printing on the Zebra printer
-        private string GenerateZpl(string itemName, string suppCatNum, string itemCode, decimal price, string buyUnitMsr, Bitmap barcodeImage)
+        private string GenerateZpl(string itemName, string suppCatNum, string itemCode, decimal price, string buyUnitMsr, Bitmap barcodeImage, int numberOfCopies)
         {
-            // Create the ZPL command string for the label
+            // Ensure the number of copies is correctly set in the ZPL command
             string zpl = $@"
             ^XA
             ^FO30,30^A0N,32,32^FD{itemName}^FS               // Product Name
@@ -329,12 +367,15 @@ namespace WindowsFormsApp1
             ^FO30,105^GB250,0,3^FS                            // Line Separator
             ^FO50,120^BY2,2,50^B3N,N,60,Y,N^FD{itemCode}^FS    // Barcode for ItemCode (Code 128) with reduced size
             ^FO300,120^A0N,34,34^FR^FD${price:F2}^FS          // Price (right-aligned)
-            ^FO320,160^A0N,24,24^FR^FD{buyUnitMsr}^FS    // Units of Measure (right-aligned)
+            ^FO320,160^A0N,24,24^FR^FD{buyUnitMsr}^FS         // Units of Measure (right-aligned)
+            ^PQ{numberOfCopies}                               // Print the specified number of copies
             ^XZ
             ";
 
             return zpl;
         }
+
+
 
 
 
@@ -351,20 +392,44 @@ namespace WindowsFormsApp1
                 decimal price = Convert.ToDecimal(priceString);
                 string buyUnitMsr = output.Items[8].ToString().Split(':')[1].Trim();
 
-                // Generate barcode image
-                Bitmap barcodeImage = GenerateBarcode(itemCode);
+                // Show the label preview form
+                FormLabelPreview previewForm = new FormLabelPreview();
+                Bitmap previewImage = GenerateLabelPreviewImage(itemName, suppCatNum, itemCode, price, buyUnitMsr);
+                previewForm.SetLabelImage(previewImage); // Use a helper method for preview
+                previewForm.SetZplCommand(GenerateZpl(itemName, suppCatNum, itemCode, price, buyUnitMsr, previewImage, 1)); // Default to 1 for preview
 
-                // Generate ZPL string
-                string zplCommand = GenerateZpl(itemName, suppCatNum, itemCode, price, buyUnitMsr, barcodeImage);
+                // Show dialog and wait for user interaction
+                var result = previewForm.ShowDialog();
 
-                // Generate label preview
-                GenerateLabelPreview(itemName, suppCatNum, itemCode, price, buyUnitMsr, string.Empty);
+                if (result == DialogResult.OK)
+                {
+                    // Get the number of copies from the preview form
+                    int numberOfCopies = previewForm.GetNumberOfCopies();
+
+                    // Generate ZPL string with the correct number of copies
+                    string zplCommand = GenerateZpl(itemName, suppCatNum, itemCode, price, buyUnitMsr, previewImage, numberOfCopies);
+
+
+                    // Send to the printer
+                    bool success = RawPrinterHelper.SendStringToPrinter("ZDesigner TLP 2824 Plus (ZPL)", zplCommand);
+
+                    if (!success)
+                    {
+                        MessageBox.Show("Failed to print the label. Please check the printer connection.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Label sent to printer successfully!");
+                    }
+                }
             }
             else
             {
                 MessageBox.Show("No data to print. Please search and select a product first.");
             }
         }
+
+
 
 
 
