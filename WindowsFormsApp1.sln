@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "WindowsFormsApp1.csproj", "{74783CB4-2F57-4BFE-A38B-7A24FFCAC02D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LabelGenerator", "LabelGenerator.csproj", "{74783CB4-2F57-4BFE-A38B-7A24FFCAC02D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DF5CBCB7-6328-4517-AEA5-F1DC54E47AF9}"
 	ProjectSection(SolutionItems) = preProject
