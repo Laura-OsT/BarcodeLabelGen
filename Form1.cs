@@ -309,12 +309,12 @@ namespace WindowsFormsApp1
             // Create the ZPL command string for the label
             string zpl = $@"
             ^XA
-            ^FO10,30^A0N,30,30^FD{itemName}^FS               // Product Name
-            ^FO10,60^A0N,24,24^FD{suppCatNum}^FS              // Model Number
-            ^FO10,90^GB200,0,3^FS                            // Line Separator
-            ^FO10,100^BY2,2,50^B3N,N,60,Y,N^FD{itemCode}^FS    // Barcode for ItemCode (Code 128) with reduced size
-            ^FO250,160^A0N,24,24^FR^FD${price:F2}^FS          // Price (right-aligned)
-            ^FO250,190^A0N,24,24^FR^FD{buyUnitMsr} each^FS    // Units of Measure (right-aligned)
+            ^FO30,30^A0N,32,32^FD{itemName}^FS               // Product Name
+            ^FO40,70^A0N,30,30^FD{suppCatNum}^FS              // Model Number
+            ^FO30,105^GB250,0,3^FS                            // Line Separator
+            ^FO50,120^BY2,2,50^B3N,N,60,Y,N^FD{itemCode}^FS    // Barcode for ItemCode (Code 128) with reduced size
+            ^FO300,120^A0N,34,34^FR^FD${price:F2}^FS          // Price (right-aligned)
+            ^FO320,160^A0N,24,24^FR^FD{buyUnitMsr}^FS    // Units of Measure (right-aligned)
             ^XZ
             ";
 
